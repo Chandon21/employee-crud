@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Employee Management</h2>
+
+  <!-- Form -->
+  <form [formGroup]="employeeForm" (ngSubmit)="submit()" class="p-4 shadow rounded bg-white">
+    <div class="mb-3">
+      <label>Name</label>
+      <input class="form-control" formControlName="name">
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input class="form-control" formControlName="email">
+    </div>
+    <div class="mb-3">
+      <label>Position</label>
+      <input class="form-control" formControlName="position">
+    </div>
+    <div class="mb-3">
+      <label>Department</label>
+      <input class="form-control" formControlName="department">
+    </div>
+    <button class="btn btn-success" type="submit">
+      {{ editMode() ? 'Update Employee' : 'Add Employee' }}
+    </button>
+    <button *ngIf="editMode()" type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">Cancel</button>
+  </form>
+
+  <!-- Employee Table -->
+  <table class="table table-bordered mt-4 shadow rounded bg-white">
+    <thead class="table-success">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees()">
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.position }}</td>
+        <td>{{ emp.department }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editEmployee(emp)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteEmployee(emp.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
