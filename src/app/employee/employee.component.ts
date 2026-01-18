@@ -13,12 +13,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [EmployeeService]
 })
 export class EmployeeComponent {
-  // Signals
   employees = signal<Employee[]>([]);
   editMode = signal(false);
   editId!: number;
 
-  // Form
   employeeForm: FormGroup;
 
   constructor(private empService: EmployeeService, private fb: FormBuilder) {
@@ -32,12 +30,10 @@ export class EmployeeComponent {
     this.loadEmployees();
   }
 
-  // Load employees
   loadEmployees() {
     this.empService.getEmployees().subscribe(data => this.employees.set(data));
   }
 
-  // Submit form
   submit() {
     if (this.employeeForm.valid) {
       const formValue = this.employeeForm.value;
@@ -52,14 +48,12 @@ export class EmployeeComponent {
     }
   }
 
-  // Edit employee
   editEmployee(emp: Employee) {
     this.editMode.set(true);
     this.editId = emp.id;
     this.employeeForm.patchValue(emp);
   }
 
-  // Delete employee
   deleteEmployee(id: number) {
     if (confirm('Are you sure you want to delete this employee?')) {
       this.empService.deleteEmployee(id);
@@ -67,7 +61,6 @@ export class EmployeeComponent {
     }
   }
 
-  // Cancel edit
   cancelEdit() {
     this.editMode.set(false);
     this.employeeForm.reset();
