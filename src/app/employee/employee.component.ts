@@ -17,6 +17,15 @@ export class EmployeeComponent {
   editMode = signal(false);
   editId!: number;
 
+  countries = ['Bangladesh', 'India', 'Sri Lanka'];
+
+  countryCityMap: Record<string, string[]> = {
+    Bangladesh: ['Dhaka', 'Tangail', 'Chattogram', 'Khulna', 'Rajshahi'],
+    India: ['Delhi', 'Mumbai', 'Kolkata', 'Bangalore', 'Chennai'],
+    'Sri Lanka': ['Colombo', 'Kandy', 'Galle', 'Jaffna']
+  };
+  cities = signal<string[]>([]);
+
   employeeForm: FormGroup;
 
   constructor(private empService: EmployeeService, private fb: FormBuilder) {
@@ -24,16 +33,19 @@ export class EmployeeComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       position: ['', Validators.required],
-      department: ['', Validators.required]
+      department: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required]
     });
-
     this.loadEmployees();
+    this.employeeForm.get('country')?.valueChanges.subscribe(country => {
+      this.cities.set(this.countryCityMap[country] || []);
+      this.employeeForm.get('city')?.reset();
+    });
   }
-
   loadEmployees() {
     this.empService.getEmployees().subscribe(data => this.employees.set(data));
   }
-
   submit() {
     if (this.employeeForm.valid) {
       const formValue = this.employeeForm.value;
@@ -44,25 +56,25 @@ export class EmployeeComponent {
         this.empService.addEmployee(formValue);
       }
       this.employeeForm.reset();
+      this.cities.set([]);
       this.loadEmployees();
     }
   }
-
   editEmployee(emp: Employee) {
     this.editMode.set(true);
     this.editId = emp.id;
     this.employeeForm.patchValue(emp);
+    this.cities.set(this.countryCityMap[emp.country] || []);
   }
-
   deleteEmployee(id: number) {
     if (confirm('Are you sure you want to delete this employee?')) {
       this.empService.deleteEmployee(id);
       this.loadEmployees();
     }
   }
-
   cancelEdit() {
     this.editMode.set(false);
     this.employeeForm.reset();
+    this.cities.set([]);
   }
 }

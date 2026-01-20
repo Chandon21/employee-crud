@@ -5,7 +5,13 @@ import { Employee } from '../models/employee.model';
 @Injectable()
 export class EmployeeService {
   private employees: Employee[] = [
-    { id: 1, name: 'Chandan Ghosh', email: 'chandan21@gmail.com', position: 'Developer', department: 'IT' }
+    { id: 1, 
+      name: 'Chandan Ghosh', 
+      email: 'chandan21@gmail.com', 
+      position: 'Developer', 
+      department: 'IT' , 
+      country: 'Bangladesh',
+      city: 'Dhaka' }
   ];
 
   getEmployees(): Observable<Employee[]> {
