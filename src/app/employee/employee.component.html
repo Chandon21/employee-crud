@@ -1,48 +1,104 @@
 <div class="container mt-4">
+
+  <!-- Page Title -->
   <h2 class="text-center mb-4">Employee Management</h2>
 
-  <form [formGroup]="employeeForm" (ngSubmit)="submit()" class="p-4 shadow rounded bg-white">
+  <!-- Employee Form -->
+  <form
+    [formGroup]="employeeForm"
+    (ngSubmit)="submit()"
+    class="p-4 shadow rounded bg-white"
+  >
+
+    <!-- Name -->
     <div class="mb-3">
-      <label>Name</label>
-      <input class="form-control" formControlName="name">
+      <label class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name"
+        placeholder="Enter employee name"
+      />
     </div>
+
+    <!-- Email -->
     <div class="mb-3">
-      <label>Email</label>
-      <input class="form-control" formControlName="email">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="Enter email"
+      />
     </div>
+
+    <!-- Position -->
     <div class="mb-3">
-      <label>Position</label>
-      <input class="form-control" formControlName="position">
+      <label class="form-label">Position</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="position"
+        placeholder="Enter position"
+      />
     </div>
+
+    <!-- Department -->
     <div class="mb-3">
-      <label>Department</label>
-      <input class="form-control" formControlName="department">
+      <label class="form-label">Department</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="department"
+        placeholder="Enter department"
+      />
     </div>
-     <div class="mb-3">
-      <label>Country</label>
+
+    <!-- Country -->
+    <div class="mb-3">
+      <label class="form-label">Country</label>
       <select class="form-select" formControlName="country">
-        <option value="">Select Country</option>
+        <option value="">Select country</option>
         <option *ngFor="let country of countries" [value]="country">
           {{ country }}
         </option>
       </select>
     </div>
+
+    <!-- City -->
     <div class="mb-3">
-      <label>City</label>
-      <select class="form-select" formControlName="city" [disabled]="cities().length === 0">
-        <option value="">Select City</option>
+      <label class="form-label">City</label>
+      <select
+        class="form-select"
+        formControlName="city"
+        [disabled]="cities().length === 0"
+      >
+        <option value="">Select city</option>
         <option *ngFor="let city of cities()">
           {{ city }}
         </option>
       </select>
     </div>
-    <button class="btn btn-success" type="submit">
-      {{ editMode() ? 'Update Employee' : 'Add Employee' }}
-    </button>
-    <button *ngIf="editMode()" type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">Cancel</button>
+
+    <!-- Action Buttons -->
+    <div class="mt-3">
+      <button type="submit" class="btn btn-success">
+        {{ editMode() ? 'Update Employee' : 'Save Employee' }}
+      </button>
+
+      <button
+        *ngIf="editMode()"
+        type="button"
+        class="btn btn-secondary ms-2"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 
-  <table class="table table-bordered mt-4 shadow rounded bg-white">
+  <!-- Employee List -->
+  <table class="table table-bordered table-hover mt-4 shadow bg-white">
     <thead class="table-success">
       <tr>
         <th>ID</th>
@@ -52,9 +108,10 @@
         <th>Department</th>
         <th>Country</th>
         <th>City</th>
-        <th>Actions</th>
+        <th style="width: 140px;">Actions</th>
       </tr>
     </thead>
+
     <tbody>
       <tr *ngFor="let emp of employees()">
         <td>{{ emp.id }}</td>
@@ -65,10 +122,28 @@
         <td>{{ emp.country }}</td>
         <td>{{ emp.city }}</td>
         <td>
-          <button class="btn btn-sm btn-warning me-2" (click)="editEmployee(emp)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteEmployee(emp.id)">Delete</button>
+          <button
+            class="btn btn-sm btn-warning me-2"
+            (click)="editEmployee(emp)"
+          >
+            Edit
+          </button>
+
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="deleteEmployee(emp.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="employees().length === 0">
+        <td colspan="8" class="text-center text-muted">
+          No employees found
         </td>
       </tr>
     </tbody>
   </table>
+
 </div>

@@ -17,7 +17,9 @@ export class EmployeeService {
   getEmployees(): Observable<Employee[]> {
     return of(this.employees);
   }
-
+  getById(id: number): Employee | undefined {
+    return this.employees.find(emp => emp.id === id);
+  }
   addEmployee(emp: Employee) {
     emp.id = this.employees.length ? Math.max(...this.employees.map(e => e.id)) + 1 : 1;
     this.employees.push(emp);

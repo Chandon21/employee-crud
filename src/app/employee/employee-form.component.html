@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">
+    {{ editMode() ? 'Update Employee' : 'Add Employee' }}
+  </h2>
+
+  <form [formGroup]="employeeForm" (ngSubmit)="submit()" class="p-4 shadow bg-white rounded">
+
+
+    <button class="btn btn-success" type="submit">
+      {{ editMode() ? 'Update' : 'Save' }}
+    </button>
+
+    <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">
+      Cancel
+    </button>
+
+  </form>
+</div>

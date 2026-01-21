@@ -3,8 +3,8 @@ import { EmployeeComponent } from './employee/employee.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [EmployeeComponent],
-  template: '<app-employee></app-employee>'
+  standalone: true,              
+  imports: [EmployeeComponent], 
+  template: `<app-employee></app-employee>` 
 })
 export class AppComponent {}
